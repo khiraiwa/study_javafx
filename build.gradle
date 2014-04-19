@@ -3,7 +3,6 @@ apply plugin: 'eclipse'
 
 group = 'com.msk.flatrock'
 
-
 repositories {
 	mavenCentral()
 }
@@ -18,11 +17,22 @@ dependencies {
 
 	
 	// javafx
-	compile fileTree(dir: 'libs', includes:['*.jar'])
+	compile fileTree(dir: 'lib', includes:['*.jar'])
 
 }
-
 
 compileScala {
-	scalaCompileOptions.useCompileDaemon = true
+
 }
+
+task start(dependsOn: 'compileScala', type: JavaExec) {
+     main = 'com.msk.flatrock.Main'
+     classpath = sourceSets.main.runtimeClasspath
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+//manifest.mainAttributes("Main-Class" : "main")
+manifest.mainAttributes("Main-Class" : "com.msk.flatrock.Main") 

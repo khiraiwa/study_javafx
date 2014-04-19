@@ -33,8 +33,8 @@ object Main {
         case Some( f ) => str = "exist! [%d]" format f
         case None  => str = "nothing!"
     }
-    
     println(str)
   }
   
 }
+
