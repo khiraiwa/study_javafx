@@ -1,16 +1,49 @@
 package com.msk.flatrock
 
-import javafx.application.Application
-import javafx.stage.Stage
-import javafx.scene.Scene
-import javafx.scene.Group
+import javafx.application._
+import javafx.stage._
+import javafx.scene._
+import javafx.scene.layout._
+import javafx.scene.paint._
+import javafx.scene.control._
 
 class Main extends Application {
+
+  /**
+   * start()より前に呼ばれる
+   */
+  override def init {
+    println("called init()")
+  }
+
+  /**
+   * init()の後に呼ばれる
+   */
   override def start(stage: Stage): Unit = {
-    stage.setScene(new Scene(new Group()))
+    println("called start()")
+    val root:FlowPane = FlowPaneBuilder.create()
+        .children(new Button("aaa"), new Button("cccc")).asInstanceOf[FlowPaneBuilder[_]]
+        .build()
+
+    val scene: Scene = SceneBuilder.create()
+        .root(root).asInstanceOf[SceneBuilder[_]]
+        .fill(Color.AQUA).asInstanceOf[SceneBuilder[_]]
+        .build()
+
+    stage.setScene(scene)
+    stage.setTitle("Main")
+    stage.setX(100)
+    stage.setY(100)
+    stage.setWidth(900)
+    stage.setHeight(800)
+    stage.setOpacity(0.8)
     stage.show()
   }
-  
+
+  override def stop {
+    println("called stop()")
+  }
+
   def launch(args: Array[String]): Unit = {
     Application.launch("", "", "")
   }
@@ -24,6 +57,7 @@ class Main extends Application {
 
 object Main {
   def main(args: Array[String]): Unit = {
+    println(System.getProperties().get("javafx.runtime.version"))
     val app:Main = new Main
     app.launch(args)
     
@@ -35,6 +69,5 @@ object Main {
     }
     println(str)
   }
-  
 }
 
